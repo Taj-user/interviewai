@@ -9,7 +9,7 @@ export default function FocusArea() {
   const options = ["DSA / Coding", "System Design", "Behavioral", "Mix of All"]
 
   return (
-    <OnboardingLayout step={4} totalSteps={5}>
+    <OnboardingLayout step={4} totalSteps={6}>
       <div className="flex flex-col gap-6">
         <h2 className="text-2xl font-bold">What do you want to focus on?</h2>
         <div className="flex flex-col gap-3">

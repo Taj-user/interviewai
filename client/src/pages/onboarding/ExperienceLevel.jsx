@@ -14,7 +14,7 @@ export default function ExperienceLevel() {
     ]
 
   return (
-    <OnboardingLayout step={2} totalSteps={5}>
+    <OnboardingLayout step={2} totalSteps={6}>
       <div className="flex flex-col gap-6">
         <h2 className="text-2xl font-bold">What is your experience level?</h2>
         <div className="flex flex-col gap-3">

@@ -9,7 +9,7 @@ export default function PracticeDuration() {
   const options = ["2 - 5 mins", "5 - 15 mins", "15 - 30 mins", "30+ mins"]
 
   return (
-    <OnboardingLayout step={5} totalSteps={5}>
+    <OnboardingLayout step={5} totalSteps={6}>
       <div className="flex flex-col gap-6">
         <h2 className="text-2xl font-bold">How long do you plan to practice per session?</h2>
         <div className="flex flex-col gap-3">

@@ -15,7 +15,7 @@ export default function FieldOfStudy() {
   ]
 
   return (
-    <OnboardingLayout step={1} totalSteps={5}>
+    <OnboardingLayout step={1} totalSteps={6}>
       <div className="flex flex-col gap-6">
         <h2 className="text-2xl font-bold">What is your field of study?</h2>
         <div className="flex flex-col gap-3">

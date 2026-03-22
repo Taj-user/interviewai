@@ -9,7 +9,7 @@ export default function TargetCompany() {
   const options = ["FAANG / Big Tech", "Mid-Size Tech Company", "Startup", "Any"]
 
   return (
-    <OnboardingLayout step={3} totalSteps={5}>
+    <OnboardingLayout step={3} totalSteps={6}>
       <div className="flex flex-col gap-6">
         <h2 className="text-2xl font-bold">What type of companies are you targeting?</h2>
         <div className="flex flex-col gap-3">

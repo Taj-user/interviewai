@@ -6,6 +6,9 @@ import TargetCompany from "./pages/onboarding/TargetCompany"
 import FocusArea from "./pages/onboarding/FocusArea"
 import PracticeDuration from "./pages/onboarding/PracticeDuration"
 import Signup from "./pages/onboarding/Signup"
+import AuthCallback from "./pages/AuthCallback"
+import Dashboard from "./pages/Dashboard"
+import CheckEmail from "./pages/CheckEmail"
 
 export default function App() {
   return (
@@ -17,6 +20,9 @@ export default function App() {
       <Route path="/onboarding/focus" element={<FocusArea />} />
       <Route path="/onboarding/duration" element={<PracticeDuration />} />
       <Route path="/onboarding/signup" element={<Signup />} />
+      <Route path="/auth/callback" element={<AuthCallback />} />
+      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/check-email" element={<CheckEmail />} />
     </Routes>
   )
 }

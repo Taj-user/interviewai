@@ -7,7 +7,7 @@ export default function Welcome()
     return (
         <div className="min-h-screen flex flex-col items-center justify-center bg-gray-950 text-white px-6">
             <div className="max-w-md w-full flex flex-col items-center gap-6 text-center">
-                <h1 className="text-4xl font-bold">Interview Prep AI</h1>
+                <h1 className="text-4xl font-bold">InterviewGPT</h1>
                 <p className="text-gray-400 text-lg">
                     Practice real interview questions, get AI feedback, and land your dream tech job.
                 </p>
