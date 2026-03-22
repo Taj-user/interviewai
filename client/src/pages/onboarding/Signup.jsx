@@ -7,6 +7,7 @@ import OnboardingLayout from "../../components/OnboardingLayout"
 export default function Signup() {
   const navigate = useNavigate()
   const { answers } = useOnboarding()
+  const [fullName, setFullName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
@@ -20,6 +21,9 @@ export default function Signup() {
       password,
       options: {
         emailRedirectTo: window.location.origin + "/auth/callback",
+        data: {
+          full_name: fullName,
+        },
       },
     })
     if (error) {
@@ -50,6 +54,13 @@ export default function Signup() {
         {error && <p className="text-red-400 text-sm">{error}</p>}
         <div className="flex flex-col gap-3">
           <input
+            type="text"
+            placeholder="Full Name"
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
+            className="w-full py-3 px-4 rounded-xl border border-gray-700 bg-gray-900 text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
+          />
+          <input
             type="email"
             placeholder="Email"
             value={email}
@@ -66,7 +77,7 @@ export default function Signup() {
         </div>
         <button
           onClick={handleEmailSignup}
-          disabled={!email || !password || loading}
+          disabled={!email || !password || !fullName || loading}
           className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-xl transition"
         >
           {loading ? "Creating account..." : "Create Account"}
