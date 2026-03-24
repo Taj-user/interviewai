@@ -12,6 +12,7 @@ import CheckEmail from "./pages/CheckEmail"
 import Login from "./pages/Login"
 import ProtectedRoute from "./components/ProtectedRoute"
 import InterviewSetup from "./pages/InterviewSetup"
+import InterviewRoom from "./pages/InterviewRoom"
 
 export default function App() {
   return (
@@ -28,6 +29,7 @@ export default function App() {
       <Route path="/check-email" element={<CheckEmail />} />
       <Route path="/login" element={<Login />} />
       <Route path="/interview" element={<ProtectedRoute><InterviewSetup /></ProtectedRoute>} />
+      <Route path="/interview/session" element={<ProtectedRoute><InterviewRoom /></ProtectedRoute>} />
     </Routes>
   )
 }
