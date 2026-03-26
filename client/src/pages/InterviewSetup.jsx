@@ -73,48 +73,175 @@ export default function InterviewSetup() {
         <div className="flex flex-col gap-3">
           <p className="text-gray-400 font-medium">Difficulty</p>
           <div className="flex rounded-2xl border border-gray-700 overflow-hidden">
-            {MODES.map((mode, index) => (
-              <button
-                key={mode.label}
-                onClick={() => handleModeSelect(mode)}
-                style={
-                  selectedMode?.label === mode.label
-                    ? { backgroundColor: "#172554", borderColor: "#3b82f6", color: "white" }
-                    : {}
-                }
-                className={`flex-1 py-3 text-sm font-semibold text-gray-300 bg-gray-900 hover:bg-gray-800 transition flex items-center justify-center gap-1
-                  ${index !== 0 ? "border-l border-gray-700" : ""}`}
-              >
-                {mode.locked && <span>🔒</span>}
-                {mode.label}
-              </button>
-            ))}
+            {MODES.map((mode, index) => {
+              const isSelected = selectedMode?.label === mode.label
+              const isLocked = mode.locked
+              return (
+                <button
+                  key={mode.label}
+                  onClick={() => handleModeSelect(mode)}
+                  disabled={isLocked}
+                  className={
+                    `flex-1 py-3 text-sm font-semibold flex items-center justify-center gap-2 transition relative overflow-hidden
+                    ${isLocked
+                      ? "cursor-not-allowed opacity-80 border-yellow-400"
+                      : isSelected
+                      ? "border-blue-500 text-white"
+                      : "text-gray-300 bg-gray-900 hover:bg-gray-800"}
+                    ${index !== 0 ? "border-l border-gray-700" : ""}`
+                  }
+                  style={
+                    isLocked
+                      ? { color: "black" }
+                      : isSelected
+                      ? {
+                          backgroundColor: "#172554",
+                          borderColor: "#3b82f6",
+                          color: "white",
+                        }
+                      : {}
+                  }
+                >
+                  {/* Animated gold+white wave for locked */}
+                  {isLocked && (
+                    <span
+                      aria-hidden="true"
+                      className="absolute inset-0 pointer-events-none rounded-none"
+                      style={{
+                        zIndex: 0,
+                        background:
+                          'linear-gradient(105deg, #fff7e1 0%, #fffde6 12%, #F6E27A 25%, #F8EBC6 53%, #fff 74%, #FFD700 100%)',
+                        animation: "goldWaveSeamless 3s linear infinite",
+                        backgroundSize: "300% 300%",
+                        opacity: 0.97,
+                      }}
+                    />
+                  )}
+                  {/* Animate border / background for 'active' or selected */}
+                  {isSelected && !isLocked && (
+                    <span
+                      aria-hidden="true"
+                      className="absolute inset-0 pointer-events-none rounded-none"
+                      style={{
+                        zIndex: 0,
+                        background:
+                          'linear-gradient(100deg, #29376c 0%, #3b82f6 60%, #172554 100%)',
+                        opacity: 0.25,
+                        animation: "blueWaveSeamless 1.8s cubic-bezier(.4,0,.6,1) infinite",
+                        backgroundSize: "200% 200%",
+                      }}
+                    />
+                  )}
+                  <span className="relative z-10">
+                    {isLocked ? (
+                      <>
+                        <span className="font-semibold">Expert</span>
+                      </>
+                    ) : (
+                      mode.label
+                    )}
+                  </span>
+                </button>
+              )
+            })}
           </div>
           {selectedMode && (
             <p className="text-sm text-gray-400 px-1">{selectedMode.description}</p>
           )}
         </div>
+        {/* Animations */}
+        <style>
+          {`
+            /* Seamless left-to-right gold wave animation */
+            @keyframes goldWaveSeamless {
+              0% {
+                background-position: 0% 50%;
+              }
+              100% {
+                background-position: 100% 50%;
+              }
+            }
+            /* Seamless left-to-right blue wave animation for selected */
+            @keyframes blueWaveSeamless {
+              0% {
+                background-position: 0% 50%;
+              }
+              100% {
+                background-position: 100% 50%;
+              }
+            }
+          `}
+        </style>
 
         {/* Interview Type */}
         <div className="flex flex-col gap-3">
           <p className="text-gray-400 font-medium">Interview Type</p>
           <div className="flex rounded-2xl border border-gray-700 overflow-hidden">
-            {TYPES.map((type, index) => (
-              <button
-                key={type.label}
-                onClick={() => handleTypeSelect(type)}
-                style={
-                  selectedType?.label === type.label
-                    ? { backgroundColor: "#172554", borderColor: "#3b82f6", color: "white" }
-                    : {}
-                }
-                className={`flex-1 py-3 text-sm font-semibold text-gray-300 bg-gray-900 hover:bg-gray-800 transition flex items-center justify-center gap-1
-                  ${index !== 0 ? "border-l border-gray-700" : ""}`}
-              >
-                {type.locked && <span>🔒</span>}
-                {type.label}
-              </button>
-            ))}
+            {TYPES.map((type, index) => {
+              const isSelected = selectedType?.label === type.label;
+              const isLocked = type.locked;
+              return (
+                <button
+                  key={type.label}
+                  onClick={() => handleTypeSelect(type)}
+                  disabled={isLocked}
+                  className={
+                    `flex-1 py-3 text-sm font-semibold flex items-center justify-center gap-2 transition relative overflow-hidden
+                    ${isLocked
+                      ? "cursor-not-allowed opacity-80 border-yellow-400"
+                      : isSelected
+                      ? "border-blue-500 text-white"
+                      : "text-gray-300 bg-gray-900 hover:bg-gray-800"}
+                    ${index !== 0 ? "border-l border-gray-700" : ""}`
+                  }
+                  style={
+                    isLocked
+                      ? { color: "black" }
+                      : isSelected
+                      ? {
+                          backgroundColor: "#172554",
+                          borderColor: "#3b82f6",
+                          color: "white",
+                        }
+                      : {}
+                  }
+                >
+                  {/* Animated gold+white wave for locked (same as Difficulty) */}
+                  {isLocked && (
+                    <span
+                      aria-hidden="true"
+                      className="absolute inset-0 pointer-events-none rounded-none"
+                      style={{
+                        zIndex: 0,
+                        background:
+                          'linear-gradient(105deg, #fff7e1 0%, #fffde6 12%, #F6E27A 25%, #F8EBC6 53%, #fff 74%, #FFD700 100%)',
+                        animation: "goldWaveSeamless 3s linear infinite",
+                        backgroundSize: "300% 300%",
+                        opacity: 0.97,
+                      }}
+                    />
+                  )}
+                  {/* Animate border / background for selected (same as Difficulty) */}
+                  {isSelected && !isLocked && (
+                    <span
+                      aria-hidden="true"
+                      className="absolute inset-0 pointer-events-none rounded-none"
+                      style={{
+                        zIndex: 0,
+                        background:
+                          'linear-gradient(100deg, #29376c 0%, #3b82f6 60%, #172554 100%)',
+                        opacity: 0.25,
+                        animation: "blueWaveSeamless 1.8s cubic-bezier(.4,0,.6,1) infinite",
+                        backgroundSize: "200% 200%",
+                      }}
+                    />
+                  )}
+                  <span className="relative z-10">
+                    {type.label}
+                  </span>
+                </button>
+              )
+            })}
           </div>
           {selectedType && (
             <p className="text-sm text-gray-400 px-1">{selectedType.description}</p>

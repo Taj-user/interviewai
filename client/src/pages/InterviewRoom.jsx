@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef, useEffect, use } from "react"
 import { useNavigate } from "react-router-dom"
 
 export default function InterviewRoom()
@@ -35,6 +35,12 @@ export default function InterviewRoom()
         bottomRef.current?.scrollIntoView({ behavior: "smooth" })
     }, [messages])
 
+    useEffect(() => {
+        if(!muted && messages.length === 1){
+            speakMessage(messages[0].content)
+        }
+    }, [])
+
     const handleEndSession = () => {
         setMenuOpen(false)
         setShowEndConfirm(true)
@@ -51,10 +57,55 @@ export default function InterviewRoom()
 
     const handleSendTyped = () => {
         if(!typedMessage.trim()) return
-        setMessages((prev) => [...prev, { role: "user", content: typedMessage }])
+        sendMessage(typedMessage)
         setTypedMessage("")
         setShowTypeInput(false)
     }
+
+    const sendMessage = async (userMessage) => {
+        const newMessages = [...messages, { role: "user", content: userMessage }]
+        setMessages(newMessages)
+
+        try
+        {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/interview/chat`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    messages: newMessages.map((m) => ({
+                        role: m.role === "ai" ? "assistant" : "user",
+                        content: m.content,
+                    })),
+                    mode: "beginner",
+                    interviewType: "behavioral",
+                }),
+            })
+            const data = await response.json()
+            const aiMessage = { role: "ai", content: data.message }
+            setMessages((prev) => [...prev, aiMessage])
+            if(!muted) speakMessage(data.message)
+        }
+        catch(error)
+        {
+            console.error("Chat error", error)
+        }
+    }
+
+    const speakMessage = async (text) => {
+        try {
+          const response = await fetch(`${import.meta.env.VITE_API_URL}/api/interview/speak`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ text }),
+          })
+          const blob = await response.blob()
+          const url = URL.createObjectURL(blob)
+          const audio = new Audio(url)
+          audio.play()
+        } catch (error) {
+          console.error("TTS error:", error)
+        }
+      }
 
     return (
         <div className="min-h-screen bg-gray-950 text-white flex flex-col">
